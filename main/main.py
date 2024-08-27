@@ -12,10 +12,15 @@ def main():
     for numMaquinas in range(6, 11):
         solucao = calculaSolucao(numMaquinas, matrizTarefas)
         foSolucao = fo(solucao, custos)
+
+        ciclosInicial = listaDeCiclos(solucao, custos)
+        print("Solução inicial:")
+        imprimeSolucao(numMaquinas, solucao, foSolucao, ciclosInicial)
         
         # Aplica o método de refinamento First Improvement
-        # solucao, foSolucao = refinamentoFirstImprovement(matrizTarefas, solucao, custos)
+        solucao, foSolucao = refinamentoFirstImprovement(matrizTarefas, solucao, custos)
         
+        print("Solução Refinada:")
         ciclos = listaDeCiclos(solucao, custos)
         imprimeSolucao(numMaquinas, solucao, foSolucao, ciclos)
 
@@ -144,6 +149,7 @@ def refinamentoFirstImprovement(matrizTarefas, solucao, custos):
             for j in range(i + 1, numMaquinas):
                 # Itera sobre todas as tarefas da máquina i
                 for t1 in range(len(solucao[i])):
+
                     # Itera sobre todas as tarefas da máquina j
                     for t2 in range(len(solucao[j])):
                         # Cria uma nova solução com a troca de tarefas entre as máquinas i e j
